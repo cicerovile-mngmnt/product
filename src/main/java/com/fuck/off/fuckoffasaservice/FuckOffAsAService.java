@@ -17,7 +17,7 @@ public class FuckOffAsAService {
 
     @GET
     @Path("{name}")
-    public Response setServer(@PathParam("name") final String name) {
+    public Response getService(@PathParam("name") final String name) {
         return buildResponse("Fuck off " + name);
     }
 
