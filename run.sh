@@ -1,0 +1,1 @@
+java -jar target/fuck-off-as-a-service-0.0.1-SNAPSHOT.jar
