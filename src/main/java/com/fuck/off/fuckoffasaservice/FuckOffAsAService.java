@@ -1,10 +1,16 @@
 package com.fuck.off.fuckoffasaservice;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.lang.management.ManagementFactory;
+import java.lang.management.MemoryUsage;
+import java.util.ArrayList;
+import java.util.List;
 
 @Path(FuckOffAsAService.FUCK_OFF)
 @Component
@@ -13,11 +19,44 @@ import javax.ws.rs.core.Response;
 @SuppressWarnings({"SpringAutowiredFieldsWarningInspection", "WeakerAccess"})
 public class FuckOffAsAService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(FuckOffAsAService.class);
+
     public static final String FUCK_OFF = "/fuck-off";
+
+    private static final List<double[]> doubles = new ArrayList<>();
+
+    static {
+        new Thread(() -> {
+            //noinspection InfiniteLoopStatement
+            while (true) {
+                if (doubles.size() > 0) {
+                    LOGGER.info("Removing one array : ");
+                    doubles.remove(0);
+                }
+                try {
+                    Thread.sleep(1000);
+                } catch (final InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
 
     @GET
     @Path("{name}")
     public Response getService(@PathParam("name") final String name) {
+        if (System.currentTimeMillis() % 10000 == 0) {
+            MemoryUsage memoryUsage = ManagementFactory.getMemoryMXBean().getHeapMemoryUsage();
+            long used = memoryUsage.getUsed();
+            long max = memoryUsage.getMax();
+            LOGGER.info("Used : " + used + ", max : " + max + ", sed percentage : " + ((used / max) * 100));
+        }
+        double[] memoryLeak = new double[Short.MAX_VALUE * 10];
+        for (int i = 0; i < memoryLeak.length; i++) {
+            //noinspection ShiftOutOfRange
+            memoryLeak[i] = 31 << 42;
+        }
+        doubles.add(memoryLeak);
         return buildResponse("Fuck off " + name);
     }
 

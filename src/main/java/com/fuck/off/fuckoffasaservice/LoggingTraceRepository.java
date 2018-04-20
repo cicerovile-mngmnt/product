@@ -23,7 +23,7 @@ public class LoggingTraceRepository implements TraceRepository {
 
     @Override
     public void add(Map<String, Object> traceInfo) {
-        LOG.info(traceInfo.toString());
+        // LOG.info(traceInfo.toString());
         this.delegate.add(traceInfo);
     }
 }
