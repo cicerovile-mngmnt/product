@@ -34,7 +34,7 @@ public class FuckOffAsAService {
                     doubles.remove(0);
                 }
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                 } catch (final InterruptedException e) {
                     e.printStackTrace();
                 }
