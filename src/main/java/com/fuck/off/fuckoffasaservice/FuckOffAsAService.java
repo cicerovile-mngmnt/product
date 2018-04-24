@@ -40,6 +40,19 @@ public class FuckOffAsAService {
                 }
             }
         }).start();
+
+        new Thread(() -> {
+            //noinspection InfiniteLoopStatement
+            while (true) {
+                LOGGER.info("Suggesting GC");
+                System.gc();
+                try {
+                    Thread.sleep(10000);
+                } catch (final InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     @GET
