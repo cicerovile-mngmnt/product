@@ -16,12 +16,11 @@ import java.util.List;
 @Component
 @Consumes(MediaType.TEXT_PLAIN)
 @Produces(MediaType.TEXT_PLAIN)
-@SuppressWarnings({"SpringAutowiredFieldsWarningInspection", "WeakerAccess"})
 public class FuckOffAsAService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FuckOffAsAService.class);
 
-    public static final String FUCK_OFF = "/fuck-off";
+    static final String FUCK_OFF = "/fuck-off";
 
     private static final List<double[]> doubles = new ArrayList<>();
 
@@ -33,11 +32,7 @@ public class FuckOffAsAService {
                     LOGGER.info("Removing one array : ");
                     doubles.remove(0);
                 }
-                try {
-                    Thread.sleep(500);
-                } catch (final InterruptedException e) {
-                    e.printStackTrace();
-                }
+                sleepy(500);
             }
         }).start();
 
@@ -46,11 +41,17 @@ public class FuckOffAsAService {
             while (true) {
                 LOGGER.info("Suggesting GC");
                 System.gc();
-                try {
-                    Thread.sleep(10000);
-                } catch (final InterruptedException e) {
-                    e.printStackTrace();
-                }
+                sleepy(10000);
+            }
+        }).start();
+
+        new Thread(() -> {
+            //noinspection InfiniteLoopStatement
+            while (true) {
+                sleepy(10000);
+                new Thread(() -> {
+                    throw new RuntimeException("Un-caught exception");
+                }).start();
             }
         }).start();
     }
@@ -91,6 +92,14 @@ public class FuckOffAsAService {
                 .status(Response.Status.OK)//
                 .header("Access-Control-Allow-Origin", "*") //
                 .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
+    }
+
+    private static void sleepy(final long sleep) {
+        try {
+            Thread.sleep(sleep);
+        } catch (final InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 }
