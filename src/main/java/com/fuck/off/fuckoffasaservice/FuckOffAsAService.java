@@ -8,7 +8,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.lang.management.ManagementFactory;
-import java.lang.management.MemoryUsage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,8 +28,9 @@ public class FuckOffAsAService {
             //noinspection InfiniteLoopStatement
             while (true) {
                 if (doubles.size() > 0) {
-                    LOGGER.info("Removing one array : ");
+                    // LOGGER.info("Removing one array : ");
                     doubles.remove(0);
+                    printMemory();
                 }
                 sleepy(500);
             }
@@ -39,7 +39,7 @@ public class FuckOffAsAService {
         new Thread(() -> {
             //noinspection InfiniteLoopStatement
             while (true) {
-                LOGGER.info("Suggesting GC");
+                // LOGGER.info("Suggesting GC");
                 System.gc();
                 sleepy(10000);
             }
@@ -49,9 +49,9 @@ public class FuckOffAsAService {
             //noinspection InfiniteLoopStatement
             while (true) {
                 sleepy(10000);
-                new Thread(() -> {
+                /*new Thread(() -> {
                     throw new RuntimeException("Un-caught exception");
-                }).start();
+                }).start();*/
             }
         }).start();
     }
@@ -59,12 +59,7 @@ public class FuckOffAsAService {
     @GET
     @Path("{name}")
     public Response getService(@PathParam("name") final String name) {
-        if (System.currentTimeMillis() % 10000 == 0) {
-            MemoryUsage memoryUsage = ManagementFactory.getMemoryMXBean().getHeapMemoryUsage();
-            long used = memoryUsage.getUsed();
-            long max = memoryUsage.getMax();
-            LOGGER.info("Used : " + used + ", max : " + max + ", sed percentage : " + ((used / max) * 100));
-        }
+        printMemory();
         double[] memoryLeak = new double[Short.MAX_VALUE * 10];
         for (int i = 0; i < memoryLeak.length; i++) {
             //noinspection ShiftOutOfRange
@@ -92,6 +87,22 @@ public class FuckOffAsAService {
                 .status(Response.Status.OK)//
                 .header("Access-Control-Allow-Origin", "*") //
                 .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
+    }
+
+    private static void printMemory() {
+        if (System.currentTimeMillis() % 1000 == 0) {
+            int megabyte = 1024 * 1024;
+            Runtime runtime = Runtime.getRuntime();
+
+            double freeMemory = runtime.freeMemory();
+            double maxMemory = runtime.maxMemory();
+            double usedMemory = ManagementFactory.getMemoryMXBean().getHeapMemoryUsage().getUsed();
+
+            double freeMemoryPercentage = ((freeMemory / maxMemory) * 100D);
+            String message = "Free : {}, max : {}, used : {}, percentage free : {}";
+
+            LOGGER.info(message, (int) freeMemory / megabyte, (int) maxMemory / megabyte, (int) usedMemory / megabyte, (int) freeMemoryPercentage);
+        }
     }
 
     private static void sleepy(final long sleep) {
