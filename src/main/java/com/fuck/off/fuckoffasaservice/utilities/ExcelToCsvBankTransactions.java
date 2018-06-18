@@ -8,7 +8,7 @@ import java.io.*;
 
 public class ExcelToCsvBankTransactions {
 
-    public static void main(String[] args) throws IOException {
+    public void main() throws IOException {
         File transactionFileDirectory = new File("/home/laptop/Dropbox/personal/expenses/whetstone-consulting/2018");
         File[] files = FILE.findFiles(transactionFileDirectory, ".csv");
 
