@@ -5,16 +5,18 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ExcelToCsvBankTransactions {
 
     public void main() throws IOException {
-        File transactionFileDirectory = new File("/home/laptop/Dropbox/personal/expenses/whetstone-consulting/2018");
-        File[] files = FILE.findFiles(transactionFileDirectory, ".csv");
+        File transactionFileDirectory = new File("/home/laptop/Dropbox/personal/expenses/whetstone-consulting");
+        List<File> files = FILE.findFilesRecursively(transactionFileDirectory, new ArrayList<>(), ".csv");
 
         int index = 1;
         File outputDirectory = new File("./transactions");
-        if (!outputDirectory.mkdirs()) {
+        if (!outputDirectory.exists() && !outputDirectory.mkdirs()) {
             System.out.println("Couldn't create output directory : " + outputDirectory.getAbsolutePath());
         }
         for (final File file : files) {
