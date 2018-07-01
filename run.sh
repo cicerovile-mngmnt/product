@@ -1,5 +1,6 @@
+# -XX:+UseG1GC \
+
 java \
-    -XX:+UseG1GC \
     -Xloggc:gc.log \
     -XX:+UseGCLogFileRotation \
     -XX:NumberOfGCLogFiles=10 \

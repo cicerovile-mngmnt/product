@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,21 +20,22 @@ public class FuckOffAsAService {
 
     static final String FUCK_OFF = "/fuck-off";
 
-    private static final List<double[]> doubles = new ArrayList<>();
+    private static final List<double[]> DOUBLES = new ArrayList<>();
 
     static {
+        /* This thread removes the arrays that leak the memory */
         new Thread(() -> {
             //noinspection InfiniteLoopStatement
             while (true) {
-                if (doubles.size() > 0) {
+                if (DOUBLES.size() > 0) {
                     // LOGGER.info("Removing one array : ");
-                    doubles.remove(0);
+                    DOUBLES.remove(0);
                     printMemory();
                 }
                 sleepy(500);
             }
         }).start();
-
+        /* This thread went to market */
         new Thread(() -> {
             //noinspection InfiniteLoopStatement
             while (true) {
@@ -44,7 +44,7 @@ public class FuckOffAsAService {
                 sleepy(10000);
             }
         }).start();
-
+        /* And this little thready went wee wee wee all the way home */
         new Thread(() -> {
             //noinspection InfiniteLoopStatement
             while (true) {
@@ -65,8 +65,8 @@ public class FuckOffAsAService {
             //noinspection ShiftOutOfRange
             memoryLeak[i] = 31 << 42;
         }
-        doubles.add(memoryLeak);
-        return buildResponse("Fuck off " + name);
+        DOUBLES.add(memoryLeak);
+        return buildResponse("Fuck off " + name + " => " + printMemory());
     }
 
     /**
@@ -89,20 +89,25 @@ public class FuckOffAsAService {
                 .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
     }
 
-    private static void printMemory() {
-        if (System.currentTimeMillis() % 1000 == 0) {
-            int megabyte = 1024 * 1024;
-            Runtime runtime = Runtime.getRuntime();
+    private static String printMemory() {
+        double megabyte = 1024 * 1024;
+        Runtime runtime = Runtime.getRuntime();
 
-            double freeMemory = runtime.freeMemory();
-            double maxMemory = runtime.maxMemory();
-            double usedMemory = ManagementFactory.getMemoryMXBean().getHeapMemoryUsage().getUsed();
+        double freeMemory = runtime.freeMemory();
+        double maxMemory = runtime.maxMemory();
+        double usedMemory = maxMemory - freeMemory;
 
-            double freeMemoryPercentage = ((freeMemory / maxMemory) * 100D);
-            String message = "Free : {}, max : {}, used : {}, percentage free : {}";
+        double freeMemoryPercentage = ((freeMemory / maxMemory) * 100D);
+        String message = "Free : %d, max : %d, used : %d, percentage free : %d";
+        message = String.format(message,
+                (int) (freeMemory / megabyte),
+                (int) (maxMemory / megabyte),
+                (int) (usedMemory / megabyte),
+                (int) (freeMemoryPercentage));
 
-            LOGGER.info(message, (int) freeMemory / megabyte, (int) maxMemory / megabyte, (int) usedMemory / megabyte, (int) freeMemoryPercentage);
-        }
+        LOGGER.info(message);
+
+        return message;
     }
 
     private static void sleepy(final long sleep) {
@@ -110,7 +115,12 @@ public class FuckOffAsAService {
             Thread.sleep(sleep);
         } catch (final InterruptedException e) {
             e.printStackTrace();
+            Thread.currentThread().interrupt();
         }
+    }
+
+    public static void main(String[] args) {
+        printMemory();
     }
 
 }
