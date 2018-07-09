@@ -28,9 +28,7 @@ public class FuckOffAsAService {
             //noinspection InfiniteLoopStatement
             while (true) {
                 if (DOUBLES.size() > 0) {
-                    // LOGGER.info("Removing one array : ");
                     DOUBLES.remove(0);
-                    printMemory();
                 }
                 sleepy(500);
             }
@@ -39,7 +37,6 @@ public class FuckOffAsAService {
         new Thread(() -> {
             //noinspection InfiniteLoopStatement
             while (true) {
-                // LOGGER.info("Suggesting GC");
                 System.gc();
                 sleepy(10000);
             }
@@ -49,9 +46,7 @@ public class FuckOffAsAService {
             //noinspection InfiniteLoopStatement
             while (true) {
                 sleepy(10000);
-                /*new Thread(() -> {
-                    throw new RuntimeException("Un-caught exception");
-                }).start();*/
+                // Should throw an exception here...
             }
         }).start();
     }
@@ -59,14 +54,19 @@ public class FuckOffAsAService {
     @GET
     @Path("{name}")
     public Response getService(@PathParam("name") final String name) {
-        printMemory();
         double[] memoryLeak = new double[Short.MAX_VALUE * 10];
         for (int i = 0; i < memoryLeak.length; i++) {
             //noinspection ShiftOutOfRange
             memoryLeak[i] = 31 << 42;
         }
         DOUBLES.add(memoryLeak);
-        return buildResponse("Fuck off " + name + " => " + printMemory());
+        return buildResponse("Fuck off " + name);
+    }
+
+    @GET
+    @Path("/memory/{print}")
+    public Response getMemory(final Boolean print) {
+        return buildResponse(printMemory(print));
     }
 
     /**
@@ -89,38 +89,35 @@ public class FuckOffAsAService {
                 .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
     }
 
-    private static String printMemory() {
+    private static double printMemory(final boolean print) {
         double megabyte = 1024 * 1024;
         Runtime runtime = Runtime.getRuntime();
 
         double freeMemory = runtime.freeMemory();
-        double maxMemory = runtime.maxMemory();
-        double usedMemory = maxMemory - freeMemory;
+        double totalMemory = runtime.totalMemory();
+        double usedMemory = totalMemory - freeMemory;
+        double freeMemoryPercentage = ((freeMemory / totalMemory) * 100D);
 
-        double freeMemoryPercentage = ((freeMemory / maxMemory) * 100D);
-        String message = "Free : %d, max : %d, used : %d, percentage free : %d";
-        message = String.format(message,
-                (int) (freeMemory / megabyte),
-                (int) (maxMemory / megabyte),
-                (int) (usedMemory / megabyte),
-                (int) (freeMemoryPercentage));
+        if (print) {
+            String message = "Free : %d, max : %d, used : %d, percentage free : %d";
+            message = String.format(message,
+                    (int) (freeMemory / megabyte),
+                    (int) (totalMemory / megabyte),
+                    (int) (usedMemory / megabyte),
+                    (int) (freeMemoryPercentage));
+            LOGGER.info(message);
+        }
 
-        LOGGER.info(message);
-
-        return message;
+        return freeMemoryPercentage;
     }
 
     private static void sleepy(final long sleep) {
         try {
             Thread.sleep(sleep);
         } catch (final InterruptedException e) {
-            e.printStackTrace();
             Thread.currentThread().interrupt();
+            e.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) {
-        printMemory();
     }
 
 }
