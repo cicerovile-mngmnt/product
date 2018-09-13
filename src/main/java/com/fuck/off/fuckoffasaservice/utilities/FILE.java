@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 
 /**
  * This class contains common utilities for files like deleting directories recursively, creating
- * files and directories and searching for files and directories recursively, before the {@link org.apache.commons.io.FileUtils}
+ * files and directories and searching for files and directories recursively, before the {@link IOUtils}
  * from Apache was available.
  *
  * @author Michael Couck
