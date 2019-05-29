@@ -4,6 +4,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
+/**
+ * @author Michael Couck
+ * @since 28-05-2019
+ * @version 1.0
+ */
 @SpringBootApplication
 @ComponentScan(basePackages = {"be.belgiantrain.phoenix.product"})
 @SuppressWarnings("SpringFacetCodeInspection")

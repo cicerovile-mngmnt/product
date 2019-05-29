@@ -14,7 +14,7 @@ spring:
 eureka:
   client:
     fetchRegistry: false
-    registerWithEureka: true
+    registerWithEureka: false
     serviceUrl:
       defaultZone: ${EUREKA_URI:https://eureka-server-1.azurewebsites.net/eureka}
   server:

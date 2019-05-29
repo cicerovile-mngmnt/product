@@ -1,0 +1,10 @@
+{
+  "code" : "000",
+  "name": "standard-ticket",
+  "conditions" : {
+    "app" : "true",
+    "internet" : "true",
+    "cashier" : "true",
+    "ticket-vending-machine" : "true"
+  }
+}
