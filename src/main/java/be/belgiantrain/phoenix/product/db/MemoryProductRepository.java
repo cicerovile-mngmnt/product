@@ -22,7 +22,7 @@ import java.util.*;
 @SuppressWarnings("WeakerAccess")
 public class MemoryProductRepository implements ProductRepository {
 
-    private Set<Product> products = new TreeSet<>((o1, o2) -> o1.getCode().compareTo(o2.getCode()));
+    private Set<Product> products = new TreeSet<>(Comparator.comparing(Product::getCode));
 
     public Set<Product> getProducts() {
         return Collections.unmodifiableSet(products);
@@ -46,6 +46,7 @@ public class MemoryProductRepository implements ProductRepository {
         return null;
     }
 
+    @SuppressWarnings("ConstantConditions")
     @PostConstruct
     public void postConstruct() throws IOException {
         Gson gson = new Gson();
@@ -54,22 +55,17 @@ public class MemoryProductRepository implements ProductRepository {
         // For some reason this is empty on Azure
         log.error("Files for data : {}", files);
         if (files == null || files.isEmpty()) {
-            Map<String, Object> conditions = new HashMap<>();
-            conditions.put("app", "true");
-            conditions.put("internet", "true");
-            conditions.put("cashier", "true");
-            conditions.put("ticket-vending-machine", "true");
-            Product product = new Product("000", "standard-ticket", conditions);
-            products.add(product);
         } else {
             for (final String file : files) {
-                inputStream = MemoryProductRepository.class.getClassLoader().getResourceAsStream("product/" + file);
-                String json = new String(IOUtils.toByteArray(inputStream));
-                Product product = gson.fromJson(json, Product.class);
-                log.error("File  : {}, product : {}", file, product);
-                products.add(product);
+                // inputStream = MemoryProductRepository.class.getClassLoader().getResourceAsStream("product/" + file);
+                // String json = new String(IOUtils.toByteArray(inputStream));
+                // Product product = gson.fromJson(json, Product.class);
+                // log.error("File  : {}, product : {}", file, product);
+                // products.add(product);
             }
         }
+        Product product = new Product("0", "000", "standard-ticket");
+        products.add(product);
     }
 
 }

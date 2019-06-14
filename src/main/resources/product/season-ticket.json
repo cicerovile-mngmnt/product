@@ -1,0 +1,42 @@
+[
+  {
+    "code": "aaa",
+    "name": "train"
+  },
+  {
+    "code": "bbb",
+    "name": "train-tec-next"
+  },
+  {
+    "code": "ccc",
+    "name": "train-trajectory-tec"
+  },
+  {
+    "code": "ddd",
+    "name": "train-delijn-tec"
+  },
+  {
+    "code": "eee",
+    "name": "train-region-net"
+  },
+  {
+    "code": "fff",
+    "name": "train-city-nets"
+  },
+  {
+    "code": "ggg",
+    "name": "train-city-net"
+  },
+  {
+    "code": "hhh",
+    "name": "train-tec-next-region-net"
+  },
+  {
+    "code": "iii",
+    "name": "train-tec-city-net"
+  },
+  {
+    "code": "jjj",
+    "name": "train-delijn-tec-city-net"
+  }
+]
