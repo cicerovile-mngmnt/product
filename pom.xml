@@ -115,8 +115,8 @@
                         </property>
                     </appSettings>
                     <!-- Web App information -->
-                    <resourceGroup>senpai-microservice-stack</resourceGroup>
-                    <appName>product-1</appName>
+                    <resourceGroup>ypto</resourceGroup>
+                    <appName>product</appName>
                     <region>westeurope</region>
                     <!-- Java Runtime Stack for Web App on Linux-->
                     <linuxRuntime>jre8</linuxRuntime>
