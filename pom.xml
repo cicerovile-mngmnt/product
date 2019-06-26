@@ -28,6 +28,16 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
+
+        <!-- Serenity parameters -->
+        <write-classes>-Dwrite.classes=true</write-classes>
+        <clean-classes>-Dclean.classes=true</clean-classes>
+        <included-packages>-Dincluded.packages=ronin</included-packages>
+        <excluded-packages>-Dexcluded.packages=Mock:Test:Integration</excluded-packages>
+        <included-adapters>-Dincluded.adapters=coverage:complexity:dependency</included-adapters>
+        <serenity-parameters>${write-classes} ${clean-classes} ${included-packages} ${excluded-packages} ${included-adapters} -noverify</serenity-parameters>
+
+        <java-opts>-Xms1024m -Xmx4096m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=.</java-opts>
     </properties>
 
     <dependencyManagement>
@@ -101,6 +111,45 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19.1</version>
+                <configuration>
+                    <forkMode>once</forkMode>
+                    <testFailureIgnore>false</testFailureIgnore>
+                    <includes>
+                        <include>**/*Test.java</include>
+                    </includes>
+                    <argLine>${java-opts} -javaagent:${project.basedir}/serenity/serenity.jar ${serenity-parameters}</argLine>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.18.1</version>
+                <configuration>
+                    <forkMode>once</forkMode>
+                    <testFailureIgnore>true</testFailureIgnore>
+                    <argLine>${java-opts} -Dintegration-test=true -Dspring.profiles.active=integration</argLine>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>integration-tests</id>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                        <configuration>
+                            <includes>
+                                <include>**/*IT.java</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <groupId>com.microsoft.azure</groupId>
                 <artifactId>azure-webapp-maven-plugin</artifactId>
