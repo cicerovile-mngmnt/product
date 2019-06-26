@@ -11,7 +11,7 @@ import java.util.Set;
  * @version 1.0
  * @since 28-05-2019
  */
-@Repository
+// @Repository
 public interface CosmosDBProductRepository extends DocumentDbRepository<Product, String> {
 
     // Product findByCode(final String code);

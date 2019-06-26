@@ -1,4 +1,4 @@
-package be.belgiantrain.phoenix.product;
+package be.belgiantrain.phoenix.product.service;
 
 import be.belgiantrain.phoenix.product.db.ProductRepository;
 import be.belgiantrain.phoenix.product.model.Product;
@@ -6,7 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Michael Couck
@@ -17,17 +18,21 @@ import java.util.Collection;
 @SuppressWarnings("WeakerAccess")
 public class ProductService {
 
-    static final String PRODUCTS = "/products";
-    static final String PRODUCT_BY_CODE = "/product-by-code";
-    static final String PRODUCT_BY_NAME = "/product-by-name";
+    public static final String PRODUCTS = "/products";
+    public static final String PRODUCT_BY_CODE = "/product-by-code";
+    public static final String PRODUCT_BY_NAME = "/product-by-name";
+
+    private final ProductRepository productRepository;
 
     @Autowired
-    private ProductRepository productRepository;
+    public ProductService(final ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
     @ResponseBody
-    @RequestMapping(value = PRODUCTS, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Collection<Product> getProducts() {
-        return productRepository.getProducts();
+    @RequestMapping(value = PRODUCTS, method = RequestMethod.GET, consumes = MediaType.TEXT_PLAIN_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Product> getProducts() {
+        return new ArrayList<>(productRepository.getProducts());
     }
 
     @ResponseBody

@@ -1,15 +1,12 @@
 package be.belgiantrain.phoenix.product.config;
 
-import be.belgiantrain.phoenix.product.db.CosmosDBProductRepository;
 import com.microsoft.azure.spring.data.cosmosdb.config.AbstractDocumentDbConfiguration;
 import com.microsoft.azure.spring.data.cosmosdb.config.DocumentDBConfig;
-import com.microsoft.azure.spring.data.cosmosdb.repository.config.EnableDocumentDbRepositories;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
 
-@Configuration
-@SuppressWarnings({"FieldCanBeLocal", "unused"})
-@EnableDocumentDbRepositories(basePackageClasses = CosmosDBProductRepository.class)
+// @Configuration
+// @EnableDocumentDbRepositories(basePackageClasses = CosmosDBProductRepository.class)
+@SuppressWarnings({"SpringFacetCodeInspection", "unused"})
 public class AppConfiguration extends AbstractDocumentDbConfiguration {
 
     @Value("${azure.cosmosdb.uri:https://product.documents.azure.com:443/}")

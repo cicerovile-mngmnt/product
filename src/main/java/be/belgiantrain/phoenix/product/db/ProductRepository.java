@@ -2,7 +2,7 @@ package be.belgiantrain.phoenix.product.db;
 
 import be.belgiantrain.phoenix.product.model.Product;
 
-import java.util.Set;
+import java.util.Collection;
 
 /**
  * @author Michael Couck
@@ -11,7 +11,7 @@ import java.util.Set;
  */
 public interface ProductRepository {
 
-    Set<Product> getProducts();
+    Collection<Product> getProducts();
 
     Product getProductByCode(final String code);
 

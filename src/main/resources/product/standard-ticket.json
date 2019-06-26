@@ -1,85 +1,106 @@
 [
   {
+    "id" : "0",
     "code": "000",
     "name": "standard-ticket"
   },
   {
+    "id" : "1",
     "code": "001",
     "name": "go-pass"
   },
   {
+    "id" : "2",
     "code": "002",
     "name": "weekend-ticket"
   },
   {
+    "id" : "3",
     "code": "003",
     "name": "seniors-ticket"
   },
   {
+    "id" : "4",
     "code": "004",
     "name": "large-families-040"
   },
   {
+    "id" : "5",
     "code": "005",
     "name": "large-families-041"
   },
   {
+    "id" : "6",
     "code": "006",
     "name": "journalists-043"
   },
   {
+    "id" : "7",
     "code": "007",
     "name": "large-families-039"
   },
   {
+    "id" : "8",
     "code": "008",
     "name": "prefer-reimbursement-ticket"
   },
   {
+    "id" : "9",
     "code": "009",
     "name": "journalists-050"
   },
   {
+    "id" : "10",
     "code": "010",
     "name": "military-070"
   },
   {
+    "id" : "11",
     "code": "011",
     "name": "diab-from-brussels-airport"
   },
   {
+    "id" : "12",
     "code": "012",
     "name": "diab-to-brussels-airport"
   },
   {
+    "id" : "13",
     "code": "013",
     "name": "large-families-042"
   },
   {
+    "id" : "14",
     "code": "014",
     "name": "bus-tec-to-charleroi"
   },
   {
+    "id" : "15",
     "code": "015",
     "name": "large-families-041"
   },
   {
+    "id" : "16",
     "code": "016",
     "name": "bus-tec-from-charleroi"
   },
   {
+    "id" : "17",
     "code": "017",
     "name": "ticket-from-charleroi"
   },
   {
+    "id" : "18",
     "code": "018",
     "name": "ticket-to-charleroi"
   },
   {
+    "id" : "19",
     "code": "019",
     "name": "bike-ticket"
   },
   {
+    "id" : "20",
     "code": "020",
     "name": "pet-ticket"
   }

@@ -20,7 +20,7 @@ import java.util.Map;
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "product")
-public class Product {
+public class Product implements Comparable<String> {
 
     /**
      * Cosmos identifier.
@@ -41,4 +41,8 @@ public class Product {
      */
     private Map<Locale, String> description;
 
+    @Override
+    public int compareTo(final String that) {
+        return this.getCode().compareTo(that);
+    }
 }
