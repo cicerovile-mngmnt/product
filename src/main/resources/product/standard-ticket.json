@@ -5,101 +5,121 @@
     "name": "standard-ticket"
   },
   {
+    "_comment" : "This condition adjusts the coefficient, i.e. multiply by 10",
     "id" : "1",
     "code": "001",
     "name": "go-pass"
   },
   {
+    "_comment" : "This is a condition",
     "id" : "2",
     "code": "002",
     "name": "weekend-ticket"
   },
   {
+    "_comment" : "This is a condition?",
     "id" : "3",
     "code": "003",
     "name": "seniors-ticket"
   },
   {
+    "_comment" : "This is a condition? Or standard price?",
     "id" : "4",
     "code": "004",
     "name": "large-families-040"
   },
   {
+    "_comment" : "This is a condition? Or standard price?",
     "id" : "5",
     "code": "005",
     "name": "large-families-041"
   },
   {
+    "_comment" : "This is a condition? Or standard price?",
     "id" : "6",
     "code": "006",
     "name": "journalists-043"
   },
   {
+    "_comment" : "This is a condition? Or standard price?",
     "id" : "7",
     "code": "007",
     "name": "large-families-039"
   },
   {
+    "_comment" : "What is this?",
     "id" : "8",
     "code": "008",
     "name": "prefer-reimbursement-ticket"
   },
   {
+    "_comment" : "This is a condition? Or standard price?",
     "id" : "9",
     "code": "009",
     "name": "journalists-050"
   },
   {
+    "_comment" : "This is a condition? Or standard price?",
     "id" : "10",
     "code": "010",
     "name": "military-070"
   },
   {
+    "_comment" : "This is a condition, just a surcharge.",
     "id" : "11",
     "code": "011",
     "name": "diab-from-brussels-airport"
   },
   {
+    "_comment" : "This is a condition, just a surcharge.",
     "id" : "12",
     "code": "012",
     "name": "diab-to-brussels-airport"
   },
   {
+    "_comment" : "This is a condition? Or standard price?",
     "id" : "13",
     "code": "013",
     "name": "large-families-042"
   },
   {
+    "_comment" : "This is a condition, and an aggregation with standard rates.",
     "id" : "14",
     "code": "014",
     "name": "bus-tec-to-charleroi"
   },
   {
+    "_comment" : "This is a condition? Or standard price?",
     "id" : "15",
     "code": "015",
     "name": "large-families-041"
   },
   {
+    "_comment" : "This is an aggregation?",
     "id" : "16",
     "code": "016",
     "name": "bus-tec-from-charleroi"
   },
   {
+    "_comment" : "This is an aggregation?",
     "id" : "17",
     "code": "017",
     "name": "ticket-from-charleroi"
   },
   {
+    "_comment" : "This is an aggregation?",
     "id" : "18",
     "code": "018",
     "name": "ticket-to-charleroi"
   },
   {
+    "_comment" : "Really a product?",
     "id" : "19",
     "code": "019",
     "name": "bike-ticket"
   },
   {
+    "_comment" : "Really a product?",
     "id" : "20",
     "code": "020",
     "name": "pet-ticket"
