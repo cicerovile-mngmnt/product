@@ -1,7 +1,7 @@
 server:
   port: 8444
   ssl:
-    enabled: false
+    enabled: true
     keyStoreType: JKS
     key-alias: selfsigned
     key-store: /etc/ssl/certs/belgiantrain.jks
@@ -14,11 +14,6 @@ spring:
 eureka:
   client:
     fetchRegistry: false
-    registerWithEureka: false
+    registerWithEureka: true
     serviceUrl:
-      defaultZone: ${EUREKA_URI:https://eureka-server-1.azurewebsites.net/eureka}
-  server:
-    enableSelfPreservation: true
-  instance:
-    # If there are two running on the same machine this the second one must have host name 127.0.0.1
-    hostname: localhost
+      defaultZone: ${EUREKA_URI:https://azure-dev-belgianrail.be:8446/eureka}
