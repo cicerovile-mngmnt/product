@@ -1,19 +1,21 @@
 server:
   port: 8444
   ssl:
-    enabled: true
-    keyStoreType: JKS
-    key-alias: selfsigned
+    enabled: false
+    key-alias: localhost
     key-store: /etc/ssl/certs/belgiantrain.jks
     key-store-password: password
+    key-store-type: JKS
+    trust-store: /etc/ssl/certs/belgiantrain.jks
+    trust-store-password: password
+    trust-store-type: JKS
 
-spring:
-  application:
-    name: product
 
 eureka:
   client:
     fetchRegistry: false
     registerWithEureka: true
     serviceUrl:
-      defaultZone: ${EUREKA_URI:https://azure-dev-belgianrail.be:8446/eureka}
+      defaultZone: ${EUREKA_URI:http://localhost:8446/eureka}
+    should-enforce-registration-at-init: false
+    initial-instance-info-replication-interval-seconds: 15
