@@ -10,6 +10,9 @@ server:
     trust-store-password: password
     trust-store-type: JKS
 
+spring:
+  application:
+    name: product
 
 eureka:
   client:
